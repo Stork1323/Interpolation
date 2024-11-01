@@ -1,4 +1,5 @@
 import numpy as np
+#import sys
 from PIL import Image
 
 def nearest_neighbor_interpolation(image, scale_x, scale_y):
@@ -14,6 +15,8 @@ def nearest_neighbor_interpolation(image, scale_x, scale_y):
     # Get the pixel data of the original image
     original_pixels = image.load()
 
+    print("processing nearest neighbor interpolation ...")
+
     # For each pixel in the new image, find the corresponding nearest pixel in the original image
     for y in range(new_height):
         for x in range(new_width):
@@ -26,6 +29,7 @@ def nearest_neighbor_interpolation(image, scale_x, scale_y):
 
             # Set the pixel value in the new image
             rescaled_image.putpixel((x, y), pixel_value)
+
 
     return rescaled_image
 def bilinear_interpolation(image, scale_x, scale_y):
@@ -40,6 +44,8 @@ def bilinear_interpolation(image, scale_x, scale_y):
 
     # Get the pixel data of the original image
     original_pixels = image.load()
+
+    print("processing bilinear interpolation ...")
 
     for y in range(new_height):
         for x in range(new_width):
@@ -69,6 +75,7 @@ def bilinear_interpolation(image, scale_x, scale_y):
 
             # Set the interpolated pixel value in the new image
             rescaled_image.putpixel((x, y), tuple(pixel_value.astype(int)))
+	   
 
     return rescaled_image
 
@@ -84,6 +91,8 @@ def bicubic_interpolation(image, scale_x, scale_y):
 
     # Get the pixel data of the original image
     original_pixels = image.load()
+
+    print("processing bicubic interpolation ...")
 
     # Bicubic kernel function
     def cubic(x):
@@ -129,15 +138,16 @@ def bicubic_interpolation(image, scale_x, scale_y):
             # Assign the interpolated pixel value to the new image
             rescaled_image.putpixel((x, y), (int(R), int(G), int(B)))
 
+
     return rescaled_image
 
 
 # Load an image
-image = Image.open("../input_image/input.jpg")  # Replace with your image path
+image = Image.open("../input_image/input_portrait.jpg")  # Replace with your image path
 
 # Define scaling factors (e.g., scale by 2x in both directions)
-scale_x = 2.0
-scale_y = 2.0
+scale_x = 4.0
+scale_y = 4.0
 
 # Rescale the image using nearest neighbor interpolation
 rescaled_image = nearest_neighbor_interpolation(image, scale_x, scale_y)
